@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: [paths.src + "/index.js"],
+  entry: [paths.src + "/index.tsx"],
 
   output: {
     path: paths.build,
@@ -33,7 +33,9 @@ module.exports = {
       filename: "index.html",
     }),
   ],
-
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
   module: {
     rules: [
       {
@@ -49,6 +51,15 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.ts$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
